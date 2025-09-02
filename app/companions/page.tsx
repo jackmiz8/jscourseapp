@@ -1,30 +1,41 @@
-import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
-import CompanionForm from "@/components/CompanionForm";
+import CompanionCard from "@/components/CompanionCard";
+import SearchInput from "@/components/SearchInput";
+import SubjectFilter from "@/components/SubjectFilter";
+import { getAllCompanions } from "@/lib/actions/companions.actions";
+import { getSubjectColor } from "@/lib/utils";
 
-const CompanionsLibrary = () => {
+const CompanionsLibrary = async ({searchParams}: SearchParams) => {
+  const filters = await searchParams;
+  const subject = filters.subject ? filters.subject : '';
+  const topic = filters.topic ? filters.topic : '';
+
+  const companions = await getAllCompanions({subject, topic});
+  
+  console.log(companions);
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Companions Library</h1>
-      
-      <SignedIn>
-        <div className="space-y-6">
-          <h2 className="text-xl font-semibold">Create New Companion</h2>
-          <CompanionForm />
-        </div>
-      </SignedIn>
-      
-      <SignedOut>
-        <div className="text-center py-12">
-          <h2 className="text-xl font-semibold mb-4">Sign in to access Companions Library</h2>
-          <p className="text-gray-600 mb-6">Create and manage your AI teaching companions</p>
-          <SignInButton mode="modal">
-            <button className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium">
-              Sign In
-            </button>
-          </SignInButton>
-        </div>
-      </SignedOut>
-    </div>
+  <main>
+    <section className="flex justify-between gap-4 max-sm:flex-col">
+      <h1>Companions Library</h1>
+      <div className="flex gap-4">
+        <SearchInput />
+        <SubjectFilter />
+        
+      </div>
+    </section>
+    <section className="companions-grid">
+      {companions.map((companion: any) => (
+        <CompanionCard 
+            key={companion.id} 
+            id={companion.id}
+            name={companion.name}
+            topic={companion.topic}
+            subject={companion.subject}
+            duration={companion.duration}
+            />
+      ))}
+    </section>
+  </main>
   );
 };
 

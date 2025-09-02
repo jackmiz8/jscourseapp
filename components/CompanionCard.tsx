@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { getSubjectColor } from '@/lib/utils'
 
 
 interface CompanionCardProps {
@@ -9,12 +10,11 @@ interface CompanionCardProps {
   topic: string
   subject: string
   duration: number
-  color: string
 }
-const CompanionCard = ({ id, name, topic, subject, duration, color }: 
+const CompanionCard = ({ id, name, topic, subject, duration }: 
   CompanionCardProps) => {
   return (
-    <article className="companion-card" style={{ backgroundColor: color }}>
+    <article className="companion-card" style={{ backgroundColor: getSubjectColor(subject) }}>
       <div className="flex justify-between items-center">
         <div className="subject-badge">{subject}</div>
         <button className="companion-bookmark">
@@ -30,7 +30,7 @@ const CompanionCard = ({ id, name, topic, subject, duration, color }:
         <Image src="/icons/clock.svg" alt="duration"
           width={13.5} height={13.5}
           />
-           <p className="textsm">{duration} minutes</p>
+           <p className="text-sm">{duration} minutes</p>
            
       </div> 
 

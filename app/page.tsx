@@ -15,8 +15,6 @@ const Page = () => {
           topic="Neural Network of the Brain"
           subject="science"
           duration={45}
-          color="#ffda6e"
-
         />
         <CompanionCard 
           id="456"
@@ -24,17 +22,13 @@ const Page = () => {
           topic="Investing in Crypto Currencies"
           subject="finance"
           duration={30}
-          color="#bde7ff"
-
         />
         <CompanionCard 
           id="789"
           name="Astronaut A.I"
           topic="Space Exploration"
-          subject="astronomy"
+          subject="science"
           duration={45}
-          color="#ff6363"
-
         />
       </section>
 
